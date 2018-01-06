@@ -1,10 +1,18 @@
 package ui;
 
+import javax.jnlp.FileContents;
+import javax.jnlp.FileOpenService;
+import javax.jnlp.ServiceManager;
+import javax.jnlp.UnavailableServiceException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
-public class NonogramGenerator {
+public class NonogramGenerator implements ActionListener {
 
     private static final int DEFAULT_BOARD_SIZE = 15;
 
@@ -23,16 +31,24 @@ public class NonogramGenerator {
     private JLabel mStatus;
 
     private DefaultTableModel mTableModel;
+    private File mFile;
 
     public NonogramGenerator() {
 
         setDefaultSizes();
         setupTable();
+        setupButtons();
     }
 
     private void setDefaultSizes() {
         mWidthText.setText(String.valueOf(DEFAULT_BOARD_SIZE));
         mHeightText.setText(String.valueOf(DEFAULT_BOARD_SIZE));
+    }
+
+    private void setupButtons() {
+        mSelectButton.addActionListener(this);
+        mGenerateButton.addActionListener(this);
+        mCheckButton.addActionListener(this);
     }
 
     private void setupTable() {
@@ -52,7 +68,7 @@ public class NonogramGenerator {
         mBoard.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JList rowHeader = new JList(lm);
-        rowHeader.setFixedCellWidth(50);
+        rowHeader.setFixedCellWidth(20);
         rowHeader.setCellRenderer(new RowRenderer(mBoard));
 
         JScrollPane scroll = new JScrollPane(mBoard);
@@ -72,5 +88,22 @@ public class NonogramGenerator {
 
     public JPanel getContentPane() {
         return mContentPane;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == mSelectButton) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            int returnVal = fileChooser.showOpenDialog(mContentPane);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                mFile = fileChooser.getSelectedFile();
+                //This is where a real application would open the file.
+                    System.out.println("Opened file: " + mFile.getName());
+                mFileText.setText(mFile.getName());
+            } else {
+                    System.out.println("Error opening file");
+            }
+        }
     }
 }

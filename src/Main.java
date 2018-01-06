@@ -13,10 +13,16 @@ public class Main {
 //            .convert();
 
 
-        JFrame frame = new JFrame("Nonogram Generator");
-        frame.setContentPane(new NonogramGenerator().getContentPane());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("Nonogram Generator");
+                frame.setContentPane(new NonogramGenerator().getContentPane());
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+
+
     }
 }
