@@ -1,5 +1,8 @@
 package ui;
 
+import pixelart.PixelArtConverter;
+
+import javax.imageio.ImageIO;
 import javax.jnlp.FileContents;
 import javax.jnlp.FileOpenService;
 import javax.jnlp.ServiceManager;
@@ -9,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,8 +40,9 @@ public class NonogramGenerator implements ActionListener {
     public NonogramGenerator() {
 
         setDefaultSizes();
-        setupTable();
+//        setupTable();
         setupButtons();
+        mStatus.setText("Select an image and click Generate");
     }
 
     private void setDefaultSizes() {
@@ -53,7 +58,7 @@ public class NonogramGenerator implements ActionListener {
 
     private void setupTable() {
         ListModel lm = new AbstractListModel() {
-            String headers[] = { "a", "b", "c", "d", "e", "f", "g", "h", "i" };
+            String headers[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 
             public int getSize() {
                 return headers.length;
@@ -65,7 +70,7 @@ public class NonogramGenerator implements ActionListener {
         };
 
         mBoard.setModel(new DefaultTableModel(lm.getSize(), lm.getSize()));
-        mBoard.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        mBoard.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JList rowHeader = new JList(lm);
         rowHeader.setFixedCellWidth(20);
@@ -98,12 +103,34 @@ public class NonogramGenerator implements ActionListener {
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 mFile = fileChooser.getSelectedFile();
-                //This is where a real application would open the file.
-                    System.out.println("Opened file: " + mFile.getName());
+                System.out.println("Opened file: " + mFile.getName());
                 mFileText.setText(mFile.getName());
             } else {
-                    System.out.println("Error opening file");
+                System.out.println("Error opening file");
             }
+        } else if (e.getSource() == mGenerateButton) {
+            if (mFile == null) {
+                mStatus.setText("Please select an image file first");
+            } else if (Integer.parseInt(mWidthText.getText()) <= 0 || Integer.parseInt(mHeightText.getText()) <= 0) {
+                mStatus.setText("Width and height should be > 0");
+            } else {
+                mStatus.setText("Generating...");
+                generate();
+            }
+        }
+    }
+
+    private void generate() {
+        try {
+            BufferedImage image = new PixelArtConverter(mFile.getAbsolutePath())
+                .width(Integer.parseInt(mWidthText.getText()))
+                .height(Integer.parseInt(mHeightText.getText()))
+                .convert();
+
+            File outputfile = new File("saved.png");
+            ImageIO.write(image, "png", outputfile);
+        } catch (IOException e) {
+            System.out.println("Error generating image: " + e);
         }
     }
 }

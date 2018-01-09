@@ -14,6 +14,7 @@ public class RowRenderer extends JLabel implements ListCellRenderer {
         setForeground(header.getForeground());
         setBackground(header.getBackground());
         setFont(header.getFont());
+        setPreferredSize(new Dimension(25, 25));
     }
 
     @Override

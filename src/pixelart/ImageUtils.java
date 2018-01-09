@@ -23,6 +23,12 @@ public class ImageUtils {
 
         for (int x = 0; x < out.getWidth(); x++) {
             for (int y = 0; y < out.getHeight(); y++) {
+
+//                int rgb = source.getRGB(x, y);
+//                // Components will be in the range of 0..255:
+//                int blue = rgb & 0xff;
+//                int green = (rgb & 0xff00) >> 8;
+//                int red = (rgb & 0xff0000) >> 16;
                 final PixelColor color = getNearestColor(new Color(source.getRGB(x, y)));
 
                 out.setRGB(x, y, color.getColor().getRGB());
