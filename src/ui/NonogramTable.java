@@ -1,6 +1,10 @@
 package ui;
 
+import pixelart.ImageUtils;
+import pixelart.PixelColor;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ public class NonogramTable extends JScrollPane {
     private int mHeight;
     private JList mRowList;
     private DefaultListModel<String> mListModel;
+    private NonogramTableModel mTableModel;
 
     public NonogramTable(JTable table) {
         super(table);
@@ -36,7 +41,8 @@ public class NonogramTable extends JScrollPane {
 
 //        mBoard.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        mTable.setModel(new DefaultTableModel(2, 2));
+//        mTable.setModel(new DefaultTableModel(2, 2));
+        mTableModel = new NonogramTableModel();
         mListModel = new DefaultListModel<>();
         mListModel.addElement("a");
         mListModel.addElement("b");
@@ -45,6 +51,7 @@ public class NonogramTable extends JScrollPane {
         mRowList.setCellRenderer(new RowRenderer(mTable));
 //        mTable.setDefaultRenderer(String.class, new NonogramTableCellRenderer());
         setRowHeaderView(mRowList);
+        mTable.setModel(mTableModel);
 
     }
 
@@ -66,15 +73,18 @@ public class NonogramTable extends JScrollPane {
     }
 
     private void updateTableModels(BufferedImage image) {
-//        mTable.setModel(new DefaultTableModel(image.getHeight(), image.getWidth()));
+        PixelColor[][] data = ImageUtils.toPixelColors(image);
+        mTableModel.setData(data);
 
         mListModel.clear();
         mListModel.addElement("c");
         mListModel.addElement("d");
+//        mTable.setColumnModel(new DefaultTableColumnModel() );
 
 //        for (int i = 0; i < image.getWidth(); i++) {
 //            mTable.getColumnModel().getColumn(0).setCellRenderer(new NonogramTableCellRenderer());
 //        }
+
     }
 
     private void fillGrid() {
