@@ -38,6 +38,18 @@ public class ImageUtils {
         return out;
     }
 
+    public static PixelColor[][] toPixelColors(BufferedImage source) {
+        PixelColor[][] output = new PixelColor[source.getWidth()][source.getHeight()];
+        for (int x = 0; x < source.getWidth(); x++) {
+            for (int y = 0; y < source.getHeight(); y++) {
+                final PixelColor color = getNearestColor(new Color(source.getRGB(x, y)));
+                output[x][y] = color;
+            }
+        }
+
+        return output;
+    }
+
     private static PixelColor getNearestColor(Color color) {
         PixelColor bestMatch = null;
         double minDistance = Double.MAX_VALUE;
@@ -45,7 +57,6 @@ public class ImageUtils {
         for (PixelColor pixelColor : PixelColor.getAllColors()) {
 
             double distance = getDistanceBetweenColors(color, pixelColor.getColor());
-            System.out.println("Distance: " + distance);
             if (bestMatch == null || distance < minDistance) {
                 bestMatch = pixelColor;
                 minDistance = distance;
