@@ -9,8 +9,8 @@ public class PixelColor {
 
     private static final List<PixelColor> allColors = Arrays.asList(
         new PixelColor(255, 255, 255), // white
-        new PixelColor(200, 200, 200), // light grey
-        new PixelColor(136, 136, 136), // dark grey
+//        new PixelColor(200, 200, 200), // light grey
+//        new PixelColor(136, 136, 136), // dark grey
         new PixelColor(0, 0, 0) // black
     );
 
@@ -26,5 +26,10 @@ public class PixelColor {
 
     public static List<PixelColor> getAllColors() {
         return allColors;
+    }
+
+    public boolean isSquareFilled() {
+        // filled if square is not equal to first color (white)
+        return !mColor.equals(allColors.get(0).getColor());
     }
 }

@@ -36,11 +36,12 @@ public class NonogramGenerator implements ActionListener {
 
     private DefaultTableModel mTableModel;
     private File mFile;
+    private NonogramTable mTable;
 
     public NonogramGenerator() {
 
         setDefaultSizes();
-//        setupTable();
+        setupTable();
         setupButtons();
         mStatus.setText("Select an image and click Generate");
     }
@@ -57,31 +58,12 @@ public class NonogramGenerator implements ActionListener {
     }
 
     private void setupTable() {
-        ListModel lm = new AbstractListModel() {
-            String headers[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
+        mTable = new NonogramTable(mBoard);
 
-            public int getSize() {
-                return headers.length;
-            }
-
-            public Object getElementAt(int index) {
-                return headers[index];
-            }
-        };
-
-        mBoard.setModel(new DefaultTableModel(lm.getSize(), lm.getSize()));
-//        mBoard.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        JList rowHeader = new JList(lm);
-        rowHeader.setFixedCellWidth(20);
-        rowHeader.setCellRenderer(new RowRenderer(mBoard));
-
-        JScrollPane scroll = new JScrollPane(mBoard);
-        scroll.setRowHeaderView(rowHeader);
         if (mContentPane == null) {
             System.out.println("content pane null");
         }
-        mContentPane.add(scroll, 0);
+        mContentPane.add(mTable, 0);
 
 //        mBoard.setModel(new DefaultTableModel(5, 5));
 
@@ -129,6 +111,8 @@ public class NonogramGenerator implements ActionListener {
 
             File outputfile = new File("saved.png");
             ImageIO.write(image, "png", outputfile);
+
+            mTable.setImage(image);
         } catch (IOException e) {
             System.out.println("Error generating image: " + e);
         }

@@ -45,6 +45,7 @@ public class ImageUtils {
         for (PixelColor pixelColor : PixelColor.getAllColors()) {
 
             double distance = getDistanceBetweenColors(color, pixelColor.getColor());
+            System.out.println("Distance: " + distance);
             if (bestMatch == null || distance < minDistance) {
                 bestMatch = pixelColor;
                 minDistance = distance;
