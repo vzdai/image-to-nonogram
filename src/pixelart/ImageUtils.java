@@ -43,7 +43,7 @@ public class ImageUtils {
         for (int x = 0; x < source.getWidth(); x++) {
             for (int y = 0; y < source.getHeight(); y++) {
                 final PixelColor color = getNearestColor(new Color(source.getRGB(x, y)));
-                output[x][y] = color;
+                output[y][x] = color;
             }
         }
 

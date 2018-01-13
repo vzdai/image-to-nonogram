@@ -32,4 +32,10 @@ public class PixelColor {
         // filled if square is not equal to first color (white)
         return !mColor.equals(allColors.get(0).getColor());
     }
+
+    @Override
+    public String toString() {
+        // don't display any text in the grid
+        return "";
+    }
 }

@@ -21,6 +21,8 @@ public class NonogramTableCellRenderer extends DefaultTableCellRenderer {
         if (value instanceof PixelColor) {
             PixelColor color = (PixelColor) value;
             c.setForeground(color.getColor());
+            c.setBackground(color.getColor());
+            System.out.println("row: " + row + ", column: " + column + ", color " + color.getColor());
         }
 
         // Only for specific cell

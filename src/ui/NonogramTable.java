@@ -49,7 +49,7 @@ public class NonogramTable extends JScrollPane {
         mRowList = new JList<>(mListModel);
         mRowList.setFixedCellWidth(20);
         mRowList.setCellRenderer(new RowRenderer(mTable));
-//        mTable.setDefaultRenderer(String.class, new NonogramTableCellRenderer());
+        mTable.setDefaultRenderer(PixelColor.class, new NonogramTableCellRenderer());
         setRowHeaderView(mRowList);
         mTable.setModel(mTableModel);
 
@@ -81,9 +81,11 @@ public class NonogramTable extends JScrollPane {
         mListModel.addElement("d");
 //        mTable.setColumnModel(new DefaultTableColumnModel() );
 
-//        for (int i = 0; i < image.getWidth(); i++) {
-//            mTable.getColumnModel().getColumn(0).setCellRenderer(new NonogramTableCellRenderer());
-//        }
+        System.out.println("image width: " + image.getWidth());
+
+        for (int i = 0; i < image.getWidth(); i++) {
+            mTable.getColumnModel().getColumn(i).setCellRenderer(new NonogramTableCellRenderer());
+        }
 
     }
 

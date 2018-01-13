@@ -16,7 +16,7 @@ public class NonogramTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        System.out.println("getting row count");
+//        System.out.println("getting row count");
         if (mData == null) {
             return 0;
         }
@@ -25,7 +25,7 @@ public class NonogramTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        System.out.println("getting column count");
+//        System.out.println("getting column count");
         if (mData == null || mData.length == 0) {
             return 0;
         }
