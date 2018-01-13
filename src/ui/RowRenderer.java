@@ -14,12 +14,15 @@ public class RowRenderer extends JLabel implements ListCellRenderer {
         setForeground(header.getForeground());
         setBackground(header.getBackground());
         setFont(header.getFont());
-        setPreferredSize(new Dimension(25, 25));
     }
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         setText((value == null) ? "" : value.toString());
         return this;
+    }
+
+    public void setSize(int width, int height) {
+        setPreferredSize(new Dimension(width, height));
     }
 }

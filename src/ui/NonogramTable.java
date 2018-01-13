@@ -19,6 +19,7 @@ public class NonogramTable extends JScrollPane {
     private JList mRowList;
     private DefaultListModel<String> mListModel;
     private NonogramTableModel mTableModel;
+    private RowRenderer mRowRenderer;
 
     public NonogramTable(JTable table) {
         super(table);
@@ -47,11 +48,13 @@ public class NonogramTable extends JScrollPane {
         mListModel.addElement("a");
         mListModel.addElement("b");
         mRowList = new JList<>(mListModel);
-        mRowList.setFixedCellWidth(20);
-        mRowList.setCellRenderer(new RowRenderer(mTable));
+        mRowRenderer = new RowRenderer(mTable);
+        mRowList.setCellRenderer(mRowRenderer);
         mTable.setDefaultRenderer(PixelColor.class, new NonogramTableCellRenderer());
         setRowHeaderView(mRowList);
         mTable.setModel(mTableModel);
+//        mTable.setPreferredScrollableViewportSize(mTable.getPreferredSize());
+        mTable.setFillsViewportHeight(true);
 
     }
 
@@ -64,12 +67,6 @@ public class NonogramTable extends JScrollPane {
         }
 
         updateTableModels(image);
-
-        System.out.println("Set image");
-
-        fillGrid();
-
-        // TODO: fill in table from image
     }
 
     private void updateTableModels(BufferedImage image) {
@@ -79,17 +76,21 @@ public class NonogramTable extends JScrollPane {
         mListModel.clear();
         mListModel.addElement("c");
         mListModel.addElement("d");
-//        mTable.setColumnModel(new DefaultTableColumnModel() );
-
-        System.out.println("image width: " + image.getWidth());
+        mListModel.addElement("c");
+        mListModel.addElement("d");
+        mListModel.addElement("c");
+        mListModel.addElement("d");
+        mListModel.addElement("c");
+        mListModel.addElement("d");
+        mListModel.addElement("c");
+        mListModel.addElement("d");
+        mListModel.addElement("c");
+        mListModel.addElement("d");
 
         for (int i = 0; i < image.getWidth(); i++) {
             mTable.getColumnModel().getColumn(i).setCellRenderer(new NonogramTableCellRenderer());
         }
-
-    }
-
-    private void fillGrid() {
+        mRowRenderer.setSize(25, mTable.getRowHeight());
 
     }
 }

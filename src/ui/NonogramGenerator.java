@@ -113,8 +113,10 @@ public class NonogramGenerator implements ActionListener {
             ImageIO.write(image, "png", outputfile);
 
             mTable.setImage(image);
+            mStatus.setText("Generated!");
         } catch (IOException e) {
             System.out.println("Error generating image: " + e);
+            mStatus.setText("Error generating image");
         }
     }
 }

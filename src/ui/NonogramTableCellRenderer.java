@@ -17,12 +17,12 @@ public class NonogramTableCellRenderer extends DefaultTableCellRenderer {
         Component c = super.getTableCellRendererComponent(
              table, value, isSelected, hasFocus, row, column);
 
-        System.out.println("Object: " + value);
+//        System.out.println("Object: " + value);
         if (value instanceof PixelColor) {
             PixelColor color = (PixelColor) value;
-            c.setForeground(color.getColor());
+//            c.setForeground(color.getColor());
             c.setBackground(color.getColor());
-            System.out.println("row: " + row + ", column: " + column + ", color " + color.getColor());
+//            System.out.println("row: " + row + ", column: " + column + ", color " + color.getColor());
         }
 
         // Only for specific cell
