@@ -1,15 +1,11 @@
 package ui;
 
 import pixelart.PixelArtConverter;
+import solver.Solver;
 
 import javax.imageio.ImageIO;
-import javax.jnlp.FileContents;
-import javax.jnlp.FileOpenService;
-import javax.jnlp.ServiceManager;
-import javax.jnlp.UnavailableServiceException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -18,7 +14,7 @@ import java.io.IOException;
 
 public class NonogramGenerator implements ActionListener {
 
-    private static final int DEFAULT_BOARD_SIZE = 15;
+    private static final int DEFAULT_BOARD_SIZE = 5;
 
     private JTable mBoard;
     private JPanel mContentPane;
@@ -64,12 +60,6 @@ public class NonogramGenerator implements ActionListener {
             System.out.println("content pane null");
         }
         mContentPane.add(mTable, 0);
-
-//        mBoard.setModel(new DefaultTableModel(5, 5));
-
-//        for (int i = 0; i < mBoard.getRowCount(); i++) {
-//            headerTable.setValueAt("Row " + (i + 1), i, 0);
-//        }
     }
 
 
@@ -98,6 +88,14 @@ public class NonogramGenerator implements ActionListener {
             } else {
                 mStatus.setText("Generating...");
                 generate();
+            }
+        } else if (e.getSource() == mCheckButton) {
+            NonogramTableModel tableModel = mTable.getTableModel();
+            Solver solver = new Solver(tableModel.getRowHints(), tableModel.getColumnHints());
+            if (solver.isSolvable()) {
+                mStatus.setText("Nonogram is solvable!");
+            } else {
+                mStatus.setText("<html>Nonogram can't be solved<br/>without guessing</html>");
             }
         }
     }

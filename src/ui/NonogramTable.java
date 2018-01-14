@@ -51,6 +51,10 @@ public class NonogramTable extends JScrollPane {
         updateTableModels(image);
     }
 
+    public NonogramTableModel getTableModel() {
+        return mTableModel;
+    }
+
     private void updateTableModels(BufferedImage image) {
         PixelColor[][] data = ImageUtils.toPixelColors(image);
         mTableModel.setData(data);

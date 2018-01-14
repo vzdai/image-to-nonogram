@@ -15,6 +15,14 @@ public class Hint {
         return mValues;
     }
 
+    public int getNumFilled() {
+        int sum = 0;
+        for (int i : mValues) {
+            sum += i;
+        }
+        return sum;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -23,7 +31,11 @@ public class Hint {
             builder.append(" ");
         }
 
-        builder.deleteCharAt(builder.length() - 1);
+        if (builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
+        } else {
+            builder.append("0");
+        }
         System.out.println("returning hint: " + builder.toString());
         return builder.toString();
     }

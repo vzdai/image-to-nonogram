@@ -49,6 +49,10 @@ public class NonogramTableModel extends AbstractTableModel {
         return mRowHints;
     }
 
+    public List<Hint> getColumnHints() {
+        return mColumnHints;
+    }
+
     private void initColumnHints() {
         mColumnHints = new ArrayList<>();
 

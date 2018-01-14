@@ -32,8 +32,10 @@ public class Solver {
         }
     }
 
-    public boolean solve() {
+    public boolean isSolvable() {
+        int numSteps = 0;
         while (true) {
+            numSteps++;
             if (!solveStep()) {
                 for (int i = 0; i < mCellStates.length; i++) {
                     for (int j = 0; j < mCellStates[0].length; j++) {
@@ -44,17 +46,15 @@ public class Solver {
                     }
                 }
 
-                System.out.println("Solved!");
+                System.out.println("Solved in # steps: " + numSteps);
                 return true;
-
-
             }
         }
     }
 
     // look through all rows and all columns
     private boolean solveStep() {
-        if (!reduceRow() && !reduceColumn()) {
+        if (!reduceColumn() && !reduceRow()) {
             return false;
         }
         return true;
@@ -79,6 +79,9 @@ public class Solver {
             }
 
             if (reduce(mColumnHints.get(i), line)) {
+                for (int k = 0; k < mRowHints.size(); k++) {
+                    mCellStates[k][i] = line[k];
+                }
                 reduced = true;
             }
         }
@@ -95,6 +98,21 @@ public class Solver {
             for (int i = 0; i < state.length; i++) {
                 if (mergedStates[i] != state[i]) {
                     mergedStates[i] = CellState.UNKNOWN;
+                }
+            }
+        }
+
+        // check complete
+        int numFilled = 0;
+        for (int j = 0; j < mergedStates.length; j++) {
+            if (mergedStates[j] == CellState.FILLED) {
+                numFilled++;
+            }
+        }
+        if (numFilled == hint.getNumFilled()) {
+            for (int k = 0; k < mergedStates.length; k++) {
+                if (mergedStates[k] == CellState.UNKNOWN) {
+                   mergedStates[k] = CellState.EMPTY;
                 }
             }
         }
@@ -123,6 +141,12 @@ public class Solver {
 
     private void findState(List<Integer> hintValues, CellState[] prevState, int startPosition, List<CellState[]> possibleStates) {
         if (hintValues.size() == 0) {
+            for (int i = 0; i < prevState.length; i++) {
+                if (prevState[i] == CellState.UNKNOWN) {
+                    prevState[i] = CellState.EMPTY;
+                }
+            }
+
             possibleStates.add(prevState);
             return;
         }
@@ -134,18 +158,22 @@ public class Solver {
         for (int start = startPosition; start < prevState.length; start++) {
             boolean canFit = true;
             CellState[] nextState = prevState.clone();
-            for (int valueLength = 0; valueLength < valueToAdd; valueLength++) {
-                if (start + valueLength >= nextState.length || nextState[start + valueLength] == CellState.EMPTY) {
-                    canFit = false;
-                    nextState[start] = CellState.EMPTY;
-                    break;
-                } else {
-                    nextState[start + valueLength] = CellState.FILLED;
+            if (start - 1 >= 0 && nextState[start - 1] == CellState.FILLED) {
+                canFit = false;
+            } else {
+                for (int valueLength = 0; valueLength < valueToAdd; valueLength++) {
+                    if (start + valueLength >= nextState.length || nextState[start + valueLength] == CellState.EMPTY) {
+                        canFit = false;
+                        nextState[start] = CellState.EMPTY;
+                        break;
+                    } else {
+                        nextState[start + valueLength] = CellState.FILLED;
+                    }
                 }
             }
 
             if (canFit) {
-                findState(newValues, nextState, start + valueToAdd, possibleStates);
+                findState(newValues, nextState, start + valueToAdd + 1, possibleStates);
             }
         }
     }
