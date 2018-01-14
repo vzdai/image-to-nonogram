@@ -11,6 +11,10 @@ public class Hint {
         mValues.add(value);
     }
 
+    public List<Integer> getValues() {
+        return mValues;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
