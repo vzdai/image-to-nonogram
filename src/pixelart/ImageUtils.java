@@ -39,7 +39,7 @@ public class ImageUtils {
     }
 
     public static PixelColor[][] toPixelColors(BufferedImage source) {
-        PixelColor[][] output = new PixelColor[source.getWidth()][source.getHeight()];
+        PixelColor[][] output = new PixelColor[source.getHeight()][source.getWidth()];
         for (int x = 0; x < source.getWidth(); x++) {
             for (int y = 0; y < source.getHeight(); y++) {
                 final PixelColor color = getNearestColor(new Color(source.getRGB(x, y)));
