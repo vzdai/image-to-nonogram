@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
-public class RowRenderer extends JLabel implements ListCellRenderer {
+public class NonogramTableRowRenderer extends JLabel implements ListCellRenderer {
 
-    public RowRenderer(JTable table) {
+    public NonogramTableRowRenderer(JTable table) {
         JTableHeader header = table.getTableHeader();
         setOpaque(true);
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));

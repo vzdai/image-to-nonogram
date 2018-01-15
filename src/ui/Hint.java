@@ -15,6 +15,7 @@ public class Hint {
         return mValues;
     }
 
+    // get number of filled squares in the row
     public int getNumFilled() {
         int sum = 0;
         for (int i : mValues) {
@@ -36,7 +37,6 @@ public class Hint {
         } else {
             builder.append("0");
         }
-        System.out.println("returning hint: " + builder.toString());
         return builder.toString();
     }
 }

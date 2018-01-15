@@ -4,22 +4,16 @@ import pixelart.ImageUtils;
 import pixelart.PixelColor;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.DefaultTableModel;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NonogramTable extends JScrollPane {
 
     private JTable mTable;
-    private BufferedImage mImage;
-    private int mWidth;
-    private int mHeight;
     private JList mRowList;
     private DefaultListModel<Hint> mListModel;
     private NonogramTableModel mTableModel;
-    private RowRenderer mRowRenderer;
+    private NonogramTableRowRenderer mRowRenderer;
 
     public NonogramTable(JTable table) {
         super(table);
@@ -31,7 +25,7 @@ public class NonogramTable extends JScrollPane {
         mTableModel = new NonogramTableModel();
         mListModel = new DefaultListModel<>();
         mRowList = new JList<>(mListModel);
-        mRowRenderer = new RowRenderer(mTable);
+        mRowRenderer = new NonogramTableRowRenderer(mTable);
         mRowList.setCellRenderer(mRowRenderer);
         mTable.setDefaultRenderer(PixelColor.class, new NonogramTableCellRenderer());
         setRowHeaderView(mRowList);
@@ -41,21 +35,6 @@ public class NonogramTable extends JScrollPane {
     }
 
     public void setImage(BufferedImage image) {
-        mImage = image;
-
-        if (image != null) {
-            mWidth = image.getWidth();
-            mHeight = image.getHeight();
-        }
-
-        updateTableModels(image);
-    }
-
-    public NonogramTableModel getTableModel() {
-        return mTableModel;
-    }
-
-    private void updateTableModels(BufferedImage image) {
         PixelColor[][] data = ImageUtils.toPixelColors(image);
         mTableModel.setData(data);
 
@@ -70,6 +49,14 @@ public class NonogramTable extends JScrollPane {
             mTable.getColumnModel().getColumn(i).setCellRenderer(new NonogramTableCellRenderer());
         }
         mRowRenderer.setSize(50, mTable.getRowHeight());
+    }
+
+    public NonogramTableModel getTableModel() {
+        return mTableModel;
+    }
+
+    private void updateTableModels(BufferedImage image) {
+
 
     }
 }

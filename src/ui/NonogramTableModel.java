@@ -22,11 +22,11 @@ public class NonogramTableModel extends AbstractTableModel {
 
     private void initRowHints() {
         mRowHints = new ArrayList<>();
-        for (int i = 0; i < mData.length; i++) {
+        for (PixelColor[] row : mData) {
             int numFilled = 0;
             Hint hint = new Hint();
-            for (int j = 0; j < mData[0].length; j++) {
-                PixelColor color = mData[i][j];
+            for (int j = 0; j < row.length; j++) {
+                PixelColor color = row[j];
                 if (!color.isSquareFilled()) {
                     if (numFilled != 0) {
                         hint.addValue(numFilled);
@@ -36,14 +36,13 @@ public class NonogramTableModel extends AbstractTableModel {
                     numFilled++;
                 }
 
-                if (j == mData[0].length - 1 && numFilled > 0) {
+                if (j == row.length - 1 && numFilled > 0) {
                     hint.addValue(numFilled);
                 }
             }
             mRowHints.add(hint);
         }
     }
-
 
     public List<Hint> getRowHints() {
         return mRowHints;
@@ -80,7 +79,6 @@ public class NonogramTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-//        System.out.println("getting row count");
         if (mData == null) {
             return 0;
         }
@@ -89,7 +87,6 @@ public class NonogramTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-//        System.out.println("getting column count");
         if (mData == null || mData.length == 0) {
             return 0;
         }

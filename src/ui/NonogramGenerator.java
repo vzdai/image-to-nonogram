@@ -30,12 +30,10 @@ public class NonogramGenerator implements ActionListener {
     private JButton mCheckButton;
     private JLabel mStatus;
 
-    private DefaultTableModel mTableModel;
     private File mFile;
     private NonogramTable mTable;
 
     public NonogramGenerator() {
-
         setDefaultSizes();
         setupTable();
         setupButtons();
@@ -57,7 +55,7 @@ public class NonogramGenerator implements ActionListener {
         mTable = new NonogramTable(mBoard);
 
         if (mContentPane == null) {
-            System.out.println("content pane null");
+            System.out.println("Error: content pane is null");
         }
         mContentPane.add(mTable, 0);
     }
