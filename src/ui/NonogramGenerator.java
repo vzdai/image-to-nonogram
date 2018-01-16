@@ -5,7 +5,6 @@ import solver.Solver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 public class NonogramGenerator implements ActionListener {
 
-    private static final int DEFAULT_BOARD_SIZE = 5;
+    private static final int DEFAULT_BOARD_SIZE = 10;
 
     private JTable mBoard;
     private JPanel mContentPane;
